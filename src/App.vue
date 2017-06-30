@@ -10,21 +10,29 @@ var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
 var index = client.initIndex('dev_EVENTS');
 
 // with params
-index.search('', {
+// index.search('', {
 
+//   filters: '(unixStartDate:0 TO 1288965600)',
+//   attributesToRetrieve: ['eventTitle', 'abstract'],
+//   hitsPerPage: 50
+//   }, function searchDone(err, content) {
+//       if (err) {
+//         console.error(err);
+//         return;
+//       }
+//   for (var h in content.hits) {
+//     console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].eventTitle.toString() + content.hits[h].abstract );
+//   }
+// });
+
+index.search({
+  query: '',
   filters: '(unixStartDate:0 TO 1288965600)',
-
-
-  attributesToRetrieve: ['eventTitle', 'abstract'],
-  hitsPerPage: 50
-}, function searchDone(err, content) {
-  if (err) {
-    console.error(err);
-    return;
-  }
-
-  for (var h in content.hits) {
-    console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].eventTitle.toString() + content.hits[h].abstract );
+  attributesToRetrieve: ['eventTitle', 'abstract']
+}).then(res => {
+  console.log(res);
+  for (var h in res.hits) {
+    console.log('Hit(' + res.hits[h].objectID + '): ' + res.hits[h].eventTitle.toString() + res.hits[h].abstract );
   }
 });
 
@@ -34,7 +42,10 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App Chrissy B'
     }
-  }
+  },
+  mounted: function() {
+      console.log('mounted was mounted!');
+  }  
 }
 </script>
 
