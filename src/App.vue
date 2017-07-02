@@ -9,8 +9,9 @@
     To: <input type="text" v-model="searchTo">
     </div>
     <br>
-    from: {{searchFrom}} to: {{searchTo}}
-
+    <p>from: {{searchFrom}} to: {{searchTo}}</p>
+    <p>converts to:</p>
+    <p>from: {{momentFrom}} to: {{momentTo}}</p>
     <br>
 
     <ul>
@@ -43,6 +44,8 @@ export default {
       msg: 'Welcome to Your Vue.js App Chrissy B',
       searchFrom: 1497287700,
       searchTo: 1498028400,
+      momentFrom: 0,
+      momentTo: 0,
       eventArray: []
     }
   },
@@ -61,8 +64,17 @@ export default {
 
       // this init needs moving outside of computed
       var algoliasearch = require('algoliasearch');
+      var moment = require('moment');
       var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
       var index = client.initIndex('dev_EVENTS');
+
+      var mdateFrom = moment.unix(this.searchFrom).format("LLLL");
+      console.log("mdateFrom", mdateFrom);
+      this.momentFrom = mdateFrom;
+      var mdateTo = moment.unix(this.searchTo).format("LLLL");
+      console.log("mdateTo", mdateTo);
+      this.momentTo = mdateTo;
+
       // with params
       index.search('', {
 
@@ -82,11 +94,11 @@ export default {
           // push new results to array
           self.eventArray.push(content.hits[h]);
           // console.log(content.hits[h]);
-          console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].eventTitle.toString() + content.hits[h].abstract );
+          // console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].eventTitle.toString() + content.hits[h].abstract );
 
         }
         // check output
-        console.log(self.eventArray);
+        // console.log(self.eventArray);
       });
     }
   },
