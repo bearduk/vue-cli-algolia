@@ -9,9 +9,9 @@
     To: <input type="text" v-model="searchTo">
     </div>
     <br>
-    <p>from: {{searchFrom}} to: {{searchTo}}</p>
+    <p><b>from:</b> {{searchFrom}} <b>to:</b> {{searchTo}}</p>
     <p>converts to:</p>
-    <p>from: {{momentFrom}} to: {{momentTo}}</p>
+    <p><b>from:</b> {{momentFrom}} <b>to:</b> {{momentTo}}</p>
     <br>
 
     <ul>
