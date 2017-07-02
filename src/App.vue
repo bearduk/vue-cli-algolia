@@ -10,6 +10,10 @@
     </div>
     <br>
     from: {{searchFrom}} to: {{searchTo}}
+
+    <br>
+    <hr>
+    <img src="./assets/Algolia_logo_bg-white.svg" alt="Algolia" />
   </div>
 </template>
 
