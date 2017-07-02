@@ -3,30 +3,32 @@
     {{msg}}
   <hr>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
-    <div>  
+<!--     <div>  
     From: <input type="text" v-model="searchFrom">
     <br>
     To: <input type="text" v-model="searchTo">
-    </div>
-    <div>  
+    </div> -->
+<!--     <div>  
     From: <input type="text" v-model="momentFrom">
     <br>
     To: <input type="text" v-model="momentTo">
-    </div>
+    </div> -->
     <div>
       From (date picker): <input type="text" id="datepickerFrom">
       
       To (date picker): <input type="text" id="datepickerTo">
     </div>
+
+    {{eventArrayLength}}
     <br>
-    <p><b>from:</b> {{searchFrom}} <b>to:</b> {{searchTo}}</p>
+    <p><b>unix from:</b> {{searchFrom}} <b>to:</b> {{searchTo}}</p>
     <p>converts to:</p>
     <p><b>from:</b> {{momentFrom}} <b>to:</b> {{momentTo}}</p>
     <br>
 
     <ul>
       <li v-for="result in eventArray">
-        {{result.eventTitle}}: {{result.abstract}}<hr />
+        {{result.eventTitle}}: {{result.abstract}} <hr />
       </li>
     </ul>
     <hr>
@@ -48,22 +50,76 @@
 // });
 
 export default {
-  // NOT NEEDED name: 'app',
+  name: 'app', // not needed
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App Chrissy B',
-      searchFrom: 1497287700,
-      searchTo: 1498028400,
+      msg: 'Welcome to Algolia Events Vue.js, Chris B.',
+      searchFrom: 0,
+      searchTo: 0,
       momentFrom: 0,
       momentTo: 0,
-      eventArray: []
+      pickerFrField: 0,
+      pickerToField: 0,
+      eventArray: [],
+      eventArrayLength: 0
     }
   },
   mounted: function() {
 
+
+
       this.$nextTick(function(){
         this.searchAlg; // run the computed property as soon as we're booted
-      })
+
+        var self = this;        
+
+
+
+
+        var moment = require('moment');
+
+        var Pikaday = require('pikaday');
+
+        var pickerF = new Pikaday({ 
+          field: document.getElementById('datepickerFrom'),
+          format: 'D-M-YYYY',
+          onSelect: function(){
+            console.log(this._d);
+            var newFromUnix = new Date(this._d).getTime() / 1000;
+            console.log(newFromUnix);
+            self.searchFrom = newFromUnix;
+            console.log('searchFrom is: ' + self.searchFrom);
+          }
+        });
+        var pickerT = new Pikaday({ 
+          field: document.getElementById('datepickerTo'),
+            format: 'D-M-YYYY',
+            onSelect: function(){
+              console.log(this._d);
+              var newFromUnix = new Date(this._d).getTime() / 1000;
+              console.log(newFromUnix);
+              self.searchTo = newFromUnix;
+              console.log('searchFrom is: ' + self.searchTo);
+          }
+        });
+        
+
+        
+
+        // default start today
+        var today = new Date();
+        // today in unix
+        var unixToday = Math.floor(today.getTime() / 1000);
+        // alter picker from to today. this will trigger a search
+        pickerF.setDate(today);
+        // console.log('today is: ' + today + ' which is unix ' + unixToday);
+
+        // month ahead
+        var monthAhead = moment().add(1, 'months').format('MM/DD/YYYY');
+        // set picker date, this will trigger a search
+        pickerT.setDate(monthAhead);
+
+      }) // tixk
 
   },
   computed: {
@@ -72,26 +128,20 @@ export default {
       // set object to self rather than binding it in        
       var self = this;
 
+
       // this init needs moving outside of computed
       var algoliasearch = require('algoliasearch');
       var moment = require('moment');
-      var Pikaday = require('pikaday');
+
       var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
       var index = client.initIndex('dev_EVENTS');
 
-      var pickerF = new Pikaday({ 
-        field: document.getElementById('datepickerFrom')
-      });
-      var pickerT = new Pikaday({ 
-        field: document.getElementById('datepickerTo')
-      });
-
-      var mdateFrom = moment.unix(this.searchFrom).format("LLLL");
-      console.log("mdateFrom", mdateFrom);
-      this.momentFrom = mdateFrom;
-      var mdateTo = moment.unix(this.searchTo).format("LLLL");
-      console.log("mdateTo", mdateTo);
-      this.momentTo = mdateTo;
+      // var mdateFrom = moment.unix(this.searchFrom).format("LLLL");
+      // console.log("mdateFrom", mdateFrom);
+      // this.momentFrom = mdateFrom;
+      // var mdateTo = moment.unix(this.searchTo).format("LLLL");
+      // console.log("mdateTo", mdateTo);
+      // this.momentTo = mdateTo;
 
       // with params
       index.search('', {
@@ -118,16 +168,21 @@ export default {
         // check output
         // console.log(self.eventArray);
       });
+
+      // output the array length to make it easy to track
+      var eventArrayLength = self.eventArray.length;
+      self.eventArrayLength = eventArrayLength;      
+
     }
   },
   watch: {
-    searchFrom: function (val) {
+    searchFrom: function () {
       this.searchAlg;
     },
-    searchTo: function(val) {
+    searchTo: function() {
       this.searchAlg;
     },
-    eventArray: function(val) {
+    eventArray: function() {
       this.searchAlg;
     }
   }
