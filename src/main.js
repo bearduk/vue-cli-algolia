@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-new Vue({
+var myApp = new Vue({
   el: '#app',
   render: h => h(App)
 })

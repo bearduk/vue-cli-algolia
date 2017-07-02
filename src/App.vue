@@ -12,6 +12,12 @@
     from: {{searchFrom}} to: {{searchTo}}
 
     <br>
+
+    <ul>
+      <li v-for="result in eventArray">
+        {{result.eventTitle}}: {{result.abstract}}<hr />
+      </li>
+    </ul>
     <hr>
     <img src="./assets/Algolia_logo_bg-white.svg" alt="Algolia" />
   </div>
@@ -36,7 +42,8 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App Chrissy B',
       searchFrom: 0,
-      searchTo: 1288965600
+      searchTo: 1288965600,
+      eventArray: []
     }
   },
   mounted: function() {
@@ -48,6 +55,9 @@ export default {
   },
   computed: {
       searchAlg: function() {
+
+      // set object to self rather than binding it in        
+      var self = this;
 
       var algoliasearch = require('algoliasearch');
       var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
@@ -64,8 +74,13 @@ export default {
               return;
             }
         for (var h in content.hits) {
+          self.eventArray.push(content.hits[h]);
+          // console.log(content.hits[h]);
           console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].eventTitle.toString() + content.hits[h].abstract );
+
         }
+        // check output
+        console.log(self.eventArray);
       });
     }
   },
