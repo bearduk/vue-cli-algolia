@@ -41,8 +41,8 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App Chrissy B',
-      searchFrom: 0,
-      searchTo: 1288965600,
+      searchFrom: 1497287700,
+      searchTo: 1498028400,
       eventArray: []
     }
   },
@@ -59,6 +59,7 @@ export default {
       // set object to self rather than binding it in        
       var self = this;
 
+      // this init needs moving outside of computed
       var algoliasearch = require('algoliasearch');
       var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
       var index = client.initIndex('dev_EVENTS');
