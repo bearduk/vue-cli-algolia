@@ -73,7 +73,12 @@ export default {
               console.error(err);
               return;
             }
+          
+        // clear array
+        self.eventArray = [];  
+        // and now push the new array          
         for (var h in content.hits) {
+          // push new results to array
           self.eventArray.push(content.hits[h]);
           // console.log(content.hits[h]);
           console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].eventTitle.toString() + content.hits[h].abstract );
@@ -89,6 +94,9 @@ export default {
       this.searchAlg;
     },
     searchTo: function(val) {
+      this.searchAlg;
+    },
+    eventArray: function(val) {
       this.searchAlg;
     }
   }
