@@ -19,13 +19,14 @@
       To (date picker): <input type="text" id="datepickerTo">
     </div>
 
-    {{eventArrayLength}}
+    
     <br>
     <p><b>unix from:</b> {{searchFrom}} <b>to:</b> {{searchTo}}</p>
-    <p>converts to:</p>
+<!--     <p>converts to:</p>
     <p><b>from:</b> {{momentFrom}} <b>to:</b> {{momentTo}}</p>
-    <br>
+    <br> -->
 
+<h1>{{eventArrayLength}} results:</h1>
     <ul>
       <li v-for="result in eventArray">
         {{result.eventTitle}}: {{result.abstract}} <hr />
