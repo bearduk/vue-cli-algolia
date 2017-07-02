@@ -83,7 +83,7 @@ export default {
         var pickerF = new Pikaday({ 
           field: document.getElementById('datepickerFrom'),
           format: 'D-M-YYYY',
-          // format: 'Do MMM YY', // moment format
+          // format: 'Do MMM YY', // moment format for DOM. time and unix gets passed separately so ok to change this?
           onSelect: function(){
             console.log(this._d);
             var newFromUnix = new Date(this._d).getTime() / 1000;
