@@ -2,9 +2,22 @@
 
 > A Vue.js project
 
+Test project using Algolia JS API for searching events calendar.
+
+## Summary:
+
+Using vue-cli's webpack-simple setup (VueJS 2).
+From and to and bound to start and end dates using unixtimestamp.
+
+To do:
+Use Moment.js to convert unixtimestamp to human readable dates (new Vue methods).
+Use [Pikaday](https://github.com/dbushell/Pikaday) datepicker.
+Add filters for event types when available in JSON feed.
+
 ## Build Setup
 
-``` bash
+```
+bash
 # install dependencies
 npm install
 
