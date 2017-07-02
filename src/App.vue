@@ -83,6 +83,7 @@ export default {
         var pickerF = new Pikaday({ 
           field: document.getElementById('datepickerFrom'),
           format: 'D-M-YYYY',
+          // format: 'Do MMM YY', // moment format
           onSelect: function(){
             console.log(this._d);
             var newFromUnix = new Date(this._d).getTime() / 1000;
@@ -94,6 +95,7 @@ export default {
         var pickerT = new Pikaday({ 
           field: document.getElementById('datepickerTo'),
             format: 'D-M-YYYY',
+            // format: 'Do MMM YY', // moment format            
             onSelect: function(){
               console.log(this._d);
               var newFromUnix = new Date(this._d).getTime() / 1000;
