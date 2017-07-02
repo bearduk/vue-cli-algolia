@@ -2,7 +2,7 @@
   <div id="app">
     {{msg}}
   <hr>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
     <div>  
     From: <input type="text" v-model="searchFrom">
     <br>
@@ -79,14 +79,12 @@ export default {
       var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
       var index = client.initIndex('dev_EVENTS');
 
-      // var picker = new Pikaday({ 
-      //   field: document.getElementById('datepickerFrom'),
-      //   format: 'LLLL'
-      // });
-      // var picker = new Pikaday({ 
-      //   field: document.getElementById('datepickerTo'),
-      //   format: 'LLLL'
-      // });
+      var pickerF = new Pikaday({ 
+        field: document.getElementById('datepickerFrom')
+      });
+      var pickerT = new Pikaday({ 
+        field: document.getElementById('datepickerTo')
+      });
 
       var mdateFrom = moment.unix(this.searchFrom).format("LLLL");
       console.log("mdateFrom", mdateFrom);
