@@ -8,6 +8,16 @@
     <br>
     To: <input type="text" v-model="searchTo">
     </div>
+    <div>  
+    From: <input type="text" v-model="momentFrom">
+    <br>
+    To: <input type="text" v-model="momentTo">
+    </div>
+    <div>
+      From (date picker): <input type="text" id="datepickerFrom">
+      
+      To (date picker): <input type="text" id="datepickerTo">
+    </div>
     <br>
     <p><b>from:</b> {{searchFrom}} <b>to:</b> {{searchTo}}</p>
     <p>converts to:</p>
@@ -38,7 +48,7 @@
 // });
 
 export default {
-  name: 'app',
+  // NOT NEEDED name: 'app',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App Chrissy B',
@@ -65,8 +75,18 @@ export default {
       // this init needs moving outside of computed
       var algoliasearch = require('algoliasearch');
       var moment = require('moment');
+      var Pikaday = require('pikaday');
       var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
       var index = client.initIndex('dev_EVENTS');
+
+      // var picker = new Pikaday({ 
+      //   field: document.getElementById('datepickerFrom'),
+      //   format: 'LLLL'
+      // });
+      // var picker = new Pikaday({ 
+      //   field: document.getElementById('datepickerTo'),
+      //   format: 'LLLL'
+      // });
 
       var mdateFrom = moment.unix(this.searchFrom).format("LLLL");
       console.log("mdateFrom", mdateFrom);

@@ -11,6 +11,7 @@
   "dependencies": {
     "algoliasearch": "^3.24.0",
     "moment": "^2.18.1",
+    "pikaday": "^1.6.1",
     "vue": "^2.3.3"
   },
   "devDependencies": {
