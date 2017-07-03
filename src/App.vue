@@ -33,8 +33,9 @@
 
 <h1>{{eventArrayLength}} results:</h1>
     <ul>
+
       <li v-for="result in eventArray">
-        <p>{{result._highlightResult.eventTitle.value}}:</p> {{result.abstract}}<hr />
+        <h3 v-html="result._highlightResult.eventTitle.value"></h3> {{result.abstract}}<hr />
       </li>
     </ul>
     <hr>
@@ -236,6 +237,9 @@ a {
 }
 // Above CSS from vue-cli
 /* CB added from now on: */
+em {
+  background-color: yellow;
+}
 input {
   padding:10px;
   text-align: center;
