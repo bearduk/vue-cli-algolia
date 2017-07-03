@@ -68,7 +68,7 @@ export default {
       pickerToField: 0,
       eventArray: [],
       eventArrayLength: 0,
-      searchQuery: 'default query -  not hooked up yet.'
+      searchQuery: 'art'
     }
   },
   mounted: function() {
@@ -136,13 +136,16 @@ export default {
 
       // set object to self rather than binding it in        
       var self = this;
-
+      // var searchingFromComputed = this.searchFrom;
+      // var searchingToComputed = this.searchTo;
+      // var searchQueryComputed = this.searchQuery;
 
       // this init needs moving outside of computed
       var algoliasearch = require('algoliasearch');
       var moment = require('moment');
 
       var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
+      // var client = algoliasearch("QW5WOXYL7O", "0f825e2369bc691ec1bb85815e452ff5");
       var index = client.initIndex('dev_EVENTS');
 
       // var mdateFrom = moment.unix(this.searchFrom).format("LLLL");
@@ -153,7 +156,7 @@ export default {
       // this.momentTo = mdateTo;
 
       // with params // to do - add searchQuery here
-      index.search('', {
+      index.search(this.searchQuery, {
 
         filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ')',
         attributesToRetrieve: ['eventTitle', 'abstract'],
@@ -174,13 +177,14 @@ export default {
           // console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].eventTitle.toString() + content.hits[h].abstract );
 
         }
+
+        // output the array length to make it easy to track
+        var eventArrayLength = self.eventArray.length;
+        self.eventArrayLength = eventArrayLength; 
+
         // check output
         // console.log(self.eventArray);
-      });
-
-      // output the array length to make it easy to track
-      var eventArrayLength = self.eventArray.length;
-      self.eventArrayLength = eventArrayLength;      
+      });     
 
     }
   },
@@ -191,9 +195,13 @@ export default {
     searchTo: function() {
       this.searchAlg;
     },
-    eventArray: function() {
+    searchQuery: function() {
       this.searchAlg;
     }
+    // ,
+    // eventArray: function() {
+    //   this.searchAlg;
+    // }
   }
 }
 </script>
