@@ -13,6 +13,11 @@
     <br>
     To: <input type="text" v-model="momentTo">
     </div> -->
+
+    <div>
+      <input type="text" v-model="searchQuery" class="searchQ">
+      <p><b>search term:</b> {{ searchQuery }}</p>
+    </div>
     <div>
       From (date picker): <input type="text" id="datepickerFrom">
       
@@ -57,12 +62,13 @@ export default {
       msg: 'Welcome to Algolia Events Vue.js, Chris B.',
       searchFrom: 0,
       searchTo: 0,
-      momentFrom: 0,
-      momentTo: 0,
+      // momentFrom: 0, // no longer needed
+      // momentTo: 0, // no longer needed
       pickerFrField: 0,
       pickerToField: 0,
       eventArray: [],
-      eventArrayLength: 0
+      eventArrayLength: 0,
+      searchQuery: 'default query -  not hooked up yet.'
     }
   },
   mounted: function() {
@@ -146,7 +152,7 @@ export default {
       // console.log("mdateTo", mdateTo);
       // this.momentTo = mdateTo;
 
-      // with params
+      // with params // to do - add searchQuery here
       index.search('', {
 
         filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ')',
@@ -218,5 +224,14 @@ li {
 
 a {
   color: #42b983;
+}
+// Above CSS from vue-cli
+/* CB added from now on: */
+input {
+  padding:10px;
+  text-align: center;
+}
+input.searchQ {
+    width: 200px;    
 }
 </style>
