@@ -15,7 +15,7 @@
     </div> -->
 
     <div>
-      <input type="text" v-model="searchQuery" class="searchQ">
+      <input type="text" v-model.trim="searchQuery" class="searchQ"> <!-- trim to reduce queries-->
       <p><b>search term:</b> {{ searchQuery }}</p>
     </div>
     <div>
@@ -145,7 +145,9 @@ export default {
       var algoliasearch = require('algoliasearch');
       var moment = require('moment');
 
+      // -> corporate alg
       var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
+      // -> test alg
       // var client = algoliasearch("QW5WOXYL7O", "0f825e2369bc691ec1bb85815e452ff5");
       var index = client.initIndex('dev_EVENTS');
 
