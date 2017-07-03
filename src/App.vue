@@ -34,7 +34,7 @@
 <h1>{{eventArrayLength}} results:</h1>
     <ul>
       <li v-for="result in eventArray">
-        {{result.eventTitle}}: {{result.abstract}} <hr />
+        <p>{{result._highlightResult.eventTitle.value}}:</p> {{result.abstract}}<hr />
       </li>
     </ul>
     <hr>
@@ -173,6 +173,7 @@ export default {
         for (var h in content.hits) {
           // push new results to array
           self.eventArray.push(content.hits[h]);
+          console.log(content.hits[h]);
           // console.log(content.hits[h]);
           // console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].eventTitle.toString() + content.hits[h].abstract );
 
