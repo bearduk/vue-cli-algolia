@@ -69,7 +69,7 @@ export default {
       pickerToField: 0,
       eventArray: [],
       eventArrayLength: 0,
-      searchQuery: 'art'
+      searchQuery: 'fundi'
     }
   },
   mounted: function() {
@@ -81,13 +81,19 @@ export default {
 
         var self = this;        
 
-
+        // init the algolia search index
+        var algoliasearch = require('algoliasearch');
+        // -> corporate alg
+        // var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
+        // -> test alg
+        this.client = algoliasearch("QW5WOXYL7O", "0f825e2369bc691ec1bb85815e452ff5");
+        this.index = this.client.initIndex('dev_EVENTS');
 
 
         var moment = require('moment');
-
         var Pikaday = require('pikaday');
 
+        // initialise Pikaday from and to
         var pickerF = new Pikaday({ 
           field: document.getElementById('datepickerFrom'),
           format: 'D-M-YYYY',
@@ -112,10 +118,8 @@ export default {
               console.log('searchFrom is: ' + self.searchTo);
           }
         });
-        
 
-        
-
+        // populate dates on initial load from today, for one (momentjs) month
         // default start today
         var today = new Date();
         // today in unix
@@ -146,10 +150,10 @@ export default {
       var moment = require('moment');
 
       // -> corporate alg
-      var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
+      // var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
       // -> test alg
-      // var client = algoliasearch("QW5WOXYL7O", "0f825e2369bc691ec1bb85815e452ff5");
-      var index = client.initIndex('dev_EVENTS');
+      this.client = algoliasearch("QW5WOXYL7O", "0f825e2369bc691ec1bb85815e452ff5");
+      this.index = this.client.initIndex('dev_EVENTS');
 
       // var mdateFrom = moment.unix(this.searchFrom).format("LLLL");
       // console.log("mdateFrom", mdateFrom);
@@ -159,7 +163,7 @@ export default {
       // this.momentTo = mdateTo;
 
       // with params // to do - add searchQuery here
-      index.search(this.searchQuery, {
+      this.index.search(this.searchQuery, {
 
         filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ')',
         attributesToRetrieve: ['eventTitle', 'abstract'],
