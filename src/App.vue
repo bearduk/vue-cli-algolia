@@ -37,7 +37,7 @@
     <br> -->
 
 <h1 v-show="eventArrayLength == 1">{{eventArrayLength}} result:</h1>
-<h1 v-show="eventArrayLength > 1">{{eventArrayLength}} results:</h1>
+<h1 v-show="eventArrayLength > 1 | eventArrayLength == 0">{{eventArrayLength}} results:</h1>
     <ul>
 
       <li v-for="result in eventArray">
