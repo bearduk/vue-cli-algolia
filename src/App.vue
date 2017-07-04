@@ -163,7 +163,10 @@ export default {
               console.error(err);
               return;
             }
-          
+
+      // view full return
+      console.log(content);            
+
       // clear array
       self.eventArray = [];  
       // and now push the new array          
