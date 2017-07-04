@@ -14,7 +14,7 @@ To do:
 - ~~Use Moment.js to convert unixtimestamp to human readable dates (new Vue methods).~~ ✔
 - ~~Use [Pikaday](https://github.com/dbushell/Pikaday) datepicker.~~ ✔
 - Add filters for event types when available in JSON feed.
-- Hook up text input and add debounce.
+- ~~Hook up text input~~ and add debounce.
 
 ## Build Setup
 
