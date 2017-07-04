@@ -40,7 +40,9 @@
     <ul>
 
       <li v-for="result in eventArray">
-        <h3 v-html="result._highlightResult.eventTitle.value"></h3> {{result.abstract}}<hr />
+        <!-- <h3 v-html="result._highlightResult.eventTitle.value"></h3> {{result.abstract}}<hr /> -->
+        <h3><a v-bind:href="result.urlPath" v-html="result._highlightResult.eventTitle.value"></a></h3> {{result.abstract}}<hr />
+        <!-- <h3><a href="{{result.urlPath}}" v-html="result._highlightResult.eventTitle.value"></a></h3> <p>{{result.abstract}}</p><hr /> -->
       </li>
     </ul>
     <hr>
@@ -154,7 +156,7 @@ export default {
       this.index.search(this.searchQuery, {
 
       filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ')',
-      attributesToRetrieve: ['eventTitle', 'abstract'],
+      attributesToRetrieve: ['eventTitle', 'abstract', 'urlPath'],
       hitsPerPage: 50
       }, function searchDone(err, content) {
             if (err) {
