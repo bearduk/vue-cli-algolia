@@ -76,7 +76,8 @@ export default {
       pickerToField: 0,
       eventArray: [],
       eventArrayLength: 0,
-      searchQuery: 'fun'
+      searchQuery: 'fun',
+      page: 0
     }
   },
   mounted: function() {
@@ -140,6 +141,7 @@ export default {
         // set picker date, this will trigger a search
         pickerT.setDate(monthAhead);
 
+
         // just for testing, remove this when it's complete as we don't need a default search loaded
         this.searchMethod();
 
@@ -152,12 +154,14 @@ export default {
 
       // set object to self rather than binding it in 
       var self = this;
+      var page = self.page;
       // with params // to do - add searchQuery here
       this.index.search(this.searchQuery, {
 
       filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ')',
       attributesToRetrieve: ['eventTitle', 'abstract', 'urlPath'],
-      hitsPerPage: 50
+      hitsPerPage: 50,
+      page: page // pass in from var above which references data 'page'. Use this to work on creating pagination buttons
       }, function searchDone(err, content) {
             if (err) {
               console.error(err);
