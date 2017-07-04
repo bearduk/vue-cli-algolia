@@ -15,7 +15,12 @@
     </div> -->
 
     <div>
-      <input type="text" v-model.trim="searchQuery" class="searchQ"> <!-- trim to reduce queries-->
+      <!-- <input type="text" v-model.trim="searchQuery" class="searchQ"> --> <!-- trim to reduce queries-->
+      <p>on key up (eats up quota)</p>
+      <input type="text" v-model.trim="searchQuery" class="searchQ" v-on:keyup="searchMethod">
+      <p>on enter or submit (reduces quota hits)</p>
+      <input type="text" v-model.trim="searchQuery" class="searchQ" v-on:keyup.enter="searchMethod">      
+      <button @click="searchMethod">submit your search</button>
       <p><b>search term:</b> {{ searchQuery }}</p>
     </div>
     <div>
@@ -69,7 +74,7 @@ export default {
       pickerToField: 0,
       eventArray: [],
       eventArrayLength: 0,
-      searchQuery: 'fundi'
+      searchQuery: 'fun'
     }
   },
   mounted: function() {
@@ -133,27 +138,71 @@ export default {
         // set picker date, this will trigger a search
         pickerT.setDate(monthAhead);
 
+        // just for testing, remove this when it's complete as we don't need a default search loaded
+        this.searchMethod();
+
       }) // tixk
 
+  },
+  methods: {
+    searchMethod: function () {
+      console.log('search method run');
+
+      // set object to self rather than binding it in 
+      var self = this;
+      // with params // to do - add searchQuery here
+      this.index.search(this.searchQuery, {
+
+      filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ')',
+      attributesToRetrieve: ['eventTitle', 'abstract'],
+      hitsPerPage: 50
+      }, function searchDone(err, content) {
+            if (err) {
+              console.error(err);
+              return;
+            }
+          
+      // clear array
+      self.eventArray = [];  
+      // and now push the new array          
+      for (var h in content.hits) {
+          // push new results to array
+          self.eventArray.push(content.hits[h]);
+          console.log(content.hits[h]);
+          // console.log(content.hits[h]);
+          // console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].eventTitle.toString() + content.hits[h].abstract );
+
+      }
+
+      // output the array length to make it easy to track
+      var eventArrayLength = self.eventArray.length;
+      self.eventArrayLength = eventArrayLength; 
+
+      // check output
+      // console.log(self.eventArray);
+      }); // index search complete
+
+
+    }
   },
   computed: {
       searchAlg: function() {
 
       // set object to self rather than binding it in        
-      var self = this;
+//      var self = this;
       // var searchingFromComputed = this.searchFrom;
       // var searchingToComputed = this.searchTo;
       // var searchQueryComputed = this.searchQuery;
 
       // this init needs moving outside of computed
-      var algoliasearch = require('algoliasearch');
-      var moment = require('moment');
+ //     var algoliasearch = require('algoliasearch');
+ //     var moment = require('moment');
 
       // -> corporate alg
       // var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
       // -> test alg
-      this.client = algoliasearch("QW5WOXYL7O", "0f825e2369bc691ec1bb85815e452ff5");
-      this.index = this.client.initIndex('dev_EVENTS');
+//      this.client = algoliasearch("QW5WOXYL7O", "0f825e2369bc691ec1bb85815e452ff5");
+//      this.index = this.client.initIndex('dev_EVENTS');
 
       // var mdateFrom = moment.unix(this.searchFrom).format("LLLL");
       // console.log("mdateFrom", mdateFrom);
@@ -162,52 +211,19 @@ export default {
       // console.log("mdateTo", mdateTo);
       // this.momentTo = mdateTo;
 
-      // with params // to do - add searchQuery here
-      this.index.search(this.searchQuery, {
-
-        filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ')',
-        attributesToRetrieve: ['eventTitle', 'abstract'],
-        hitsPerPage: 50
-        }, function searchDone(err, content) {
-            if (err) {
-              console.error(err);
-              return;
-            }
-          
-        // clear array
-        self.eventArray = [];  
-        // and now push the new array          
-        for (var h in content.hits) {
-          // push new results to array
-          self.eventArray.push(content.hits[h]);
-          console.log(content.hits[h]);
-          // console.log(content.hits[h]);
-          // console.log('Hit(' + content.hits[h].objectID + '): ' + content.hits[h].eventTitle.toString() + content.hits[h].abstract );
-
-        }
-
-        // output the array length to make it easy to track
-        var eventArrayLength = self.eventArray.length;
-        self.eventArrayLength = eventArrayLength; 
-
-        // check output
-        // console.log(self.eventArray);
-      });     
+    
 
     }
   },
   watch: {
     searchFrom: function () {
-      this.searchAlg;
+      this.searchMethod();
     },
     searchTo: function() {
-      this.searchAlg;
-    },
-    searchQuery: function() {
-      this.searchAlg;
+      this.searchMethod();
     }
-    // ,
-    // eventArray: function() {
+    // searchQuery now handled by v-on in the view
+    // searchQuery: function() {
     //   this.searchAlg;
     // }
   }
