@@ -160,6 +160,11 @@ export default {
       this.index.search(this.searchQuery, {
 
       filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ')',
+
+      // TO DO:
+      // FOR FACET FILTERS SEE https://www.algolia.com/doc/guides/searching/filtering/#facet-filters
+      // Try faceting using an aray that's created with vue bound check boxes
+
       attributesToRetrieve: ['eventTitle', 'abstract', 'urlPath'],
       hitsPerPage: 50,
       page: page // pass in from var above which references data 'page'. Use this to work on creating pagination buttons
