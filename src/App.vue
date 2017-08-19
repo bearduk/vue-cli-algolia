@@ -163,6 +163,8 @@ export default {
 
       // TO DO:
       // Add in additional filters for categories https://www.algolia.com/doc/guides/searching/filtering/#filtering
+      // Note _tags is reserved so if I add that to the JSON, I can then effectively do:
+      // filters: " (unixstart TO unixend stuff) AND ( lecture OR music OR openday )  "
       // OR FOR FACET FILTERS SEE https://www.algolia.com/doc/guides/searching/filtering/#facet-filters
       // Try faceting using an aray that's created with vue bound check boxes
 
