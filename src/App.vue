@@ -167,6 +167,7 @@ export default {
         // set picker date, this will trigger a search
         pickerT.setDate(monthAhead);
 
+        this.checkedCategoriesStringify();
 
         // just for testing, remove this when it's complete as we don't need a default search loaded
         this.searchMethod();
@@ -184,7 +185,7 @@ export default {
       // with params // to do - add searchQuery here
       this.index.search(this.searchQuery, {
 
-      filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ') AND ( this.checkedCategoriesString )',
+      filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ') AND (' + this.checkedCategoriesString + ' )',
 
       // TO DO:
       // Add in additional filters for categories https://www.algolia.com/doc/guides/searching/filtering/#filtering
@@ -226,20 +227,30 @@ export default {
       }); // index search complete
 
 
-    }
-  },
-  computed: {
+    },
     checkedCategoriesStringify: function(){
       
+      let localcheckedCategories = this.checkedCategories;
+
+      // first cater for nothing being ticked. Set the filter string to something that returns all results such as have a start data that isn't 0
+      if(  localcheckedCategories.length <= 0 ) {
+        console.log("LESS THAN OR EQUAL TO ZERO: " + localcheckedCategories.length );
+        this.checkedCategoriesString = "unixStartDate != 0";
+      } else {
       // first wrap array in quotes (required for filter syntax)
-      let quoteCategories = this.checkedCategories.map(function(item) {
+      let quoteCategories = localcheckedCategories.map(function(item) {
         return '"' + item + '"';
       })
       // now join the categories using OR
       let filterBuilt = quoteCategories.join(" OR ");
       this.checkedCategoriesString = filterBuilt;
-      // return filterBuilt;
+      console.log("MORE THAN ZERO: " + localcheckedCategories.length );
+      return filterBuilt;
+      }
     }
+  },
+  computed: {
+
 //       searchAlg: function() {
 
 //       // set object to self rather than binding it in        
@@ -276,7 +287,8 @@ export default {
     searchTo: function() {
       this.searchMethod();
     },
-    checkedCategoriesStringify: function(){
+    checkedCategories: function(){
+      this.checkedCategoriesStringify();
       this.searchMethod();
     }
     // searchQuery now handled by v-on in the view
