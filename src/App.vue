@@ -36,6 +36,29 @@
     <p><b>from:</b> {{momentFrom}} <b>to:</b> {{momentTo}}</p>
     <br> -->
 
+<div>
+  <input type="checkbox" id="artsculture" value="Arts and Culture" v-model="checkedCategories">
+<label for="artsculture">Arts and Culture</label>
+<input type="checkbox" id="academicconferences" value="Academic Conferences" v-model="checkedCategories">
+<label for="academicconferences">Academic Conferences</label>
+<input type="checkbox" id="business" value="Business" v-model="checkedCategories">
+<label for="business">Business</label>
+<input type="checkbox" id="graduation" value="Graduation Ceremonies" v-model="checkedCategories">
+<label for="graduation">Graduation Ceremonies</label>
+<input type="checkbox" id="opendays" value="Open Days" v-model="checkedCategories">
+<label for="opendays">Open Days</label>
+<input type="checkbox" id="publiclectures" value="Public Lectures" v-model="checkedCategories">
+<label for="publiclectures">Public Lectures</label>
+<input type="checkbox" id="sport" value="Sport" v-model="checkedCategories">
+<label for="sport">Sport</label>
+<br>
+<span>Checked categories: {{ checkedCategories }}</span>
+<br>
+<span>checkedCategoriesString (computed string): {{ checkedCategoriesString }}</span>
+</div>
+
+
+
 <h1 v-show="eventArrayLength == 1">{{eventArrayLength}} result:</h1>
 <h1 v-show="eventArrayLength > 1 | eventArrayLength == 0">{{eventArrayLength}} results:</h1>
     <ul>
@@ -78,6 +101,8 @@ export default {
       eventArray: [],
       eventArrayLength: 0,
       searchQuery: '*',
+      checkedCategories: [],
+      checkedCategoriesString: '',
       page: 0
     }
   },
@@ -159,7 +184,7 @@ export default {
       // with params // to do - add searchQuery here
       this.index.search(this.searchQuery, {
 
-      filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ') AND ( "Open Days" OR "Academic Conferences" )',
+      filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ') AND ( this.checkedCategoriesString )',
 
       // TO DO:
       // Add in additional filters for categories https://www.algolia.com/doc/guides/searching/filtering/#filtering
@@ -204,6 +229,17 @@ export default {
     }
   },
   computed: {
+    checkedCategoriesStringify: function(){
+      
+      // first wrap array in quotes (required for filter syntax)
+      let quoteCategories = this.checkedCategories.map(function(item) {
+        return '"' + item + '"';
+      })
+      // now join the categories using OR
+      let filterBuilt = quoteCategories.join(" OR ");
+      this.checkedCategoriesString = filterBuilt;
+      // return filterBuilt;
+    }
 //       searchAlg: function() {
 
 //       // set object to self rather than binding it in        
@@ -238,6 +274,9 @@ export default {
       this.searchMethod();
     },
     searchTo: function() {
+      this.searchMethod();
+    },
+    checkedCategoriesStringify: function(){
       this.searchMethod();
     }
     // searchQuery now handled by v-on in the view
