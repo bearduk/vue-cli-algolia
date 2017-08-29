@@ -204,34 +204,34 @@ export default {
     }
   },
   computed: {
-      searchAlg: function() {
+//       searchAlg: function() {
 
-      // set object to self rather than binding it in        
-//      var self = this;
-      // var searchingFromComputed = this.searchFrom;
-      // var searchingToComputed = this.searchTo;
-      // var searchQueryComputed = this.searchQuery;
+//       // set object to self rather than binding it in        
+// //      var self = this;
+//       // var searchingFromComputed = this.searchFrom;
+//       // var searchingToComputed = this.searchTo;
+//       // var searchQueryComputed = this.searchQuery;
 
-      // this init needs moving outside of computed
- //     var algoliasearch = require('algoliasearch');
- //     var moment = require('moment');
+//       // this init needs moving outside of computed
+//  //     var algoliasearch = require('algoliasearch');
+//  //     var moment = require('moment');
 
-      // -> corporate alg
-      // var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
-      // -> test alg
-//      this.client = algoliasearch("QW5WOXYL7O", "0f825e2369bc691ec1bb85815e452ff5");
-//      this.index = this.client.initIndex('dev_EVENTS');
+//       // -> corporate alg
+//       // var client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
+//       // -> test alg
+// //      this.client = algoliasearch("QW5WOXYL7O", "0f825e2369bc691ec1bb85815e452ff5");
+// //      this.index = this.client.initIndex('dev_EVENTS');
 
-      // var mdateFrom = moment.unix(this.searchFrom).format("LLLL");
-      // console.log("mdateFrom", mdateFrom);
-      // this.momentFrom = mdateFrom;
-      // var mdateTo = moment.unix(this.searchTo).format("LLLL");
-      // console.log("mdateTo", mdateTo);
-      // this.momentTo = mdateTo;
+//       // var mdateFrom = moment.unix(this.searchFrom).format("LLLL");
+//       // console.log("mdateFrom", mdateFrom);
+//       // this.momentFrom = mdateFrom;
+//       // var mdateTo = moment.unix(this.searchTo).format("LLLL");
+//       // console.log("mdateTo", mdateTo);
+//       // this.momentTo = mdateTo;
 
     
 
-    }
+//     }
   },
   watch: {
     searchFrom: function () {
