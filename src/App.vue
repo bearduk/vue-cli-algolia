@@ -77,7 +77,7 @@ export default {
       pickerToField: 0,
       eventArray: [],
       eventArrayLength: 0,
-      searchQuery: 'fun',
+      searchQuery: '*',
       page: 0
     }
   },
@@ -159,7 +159,7 @@ export default {
       // with params // to do - add searchQuery here
       this.index.search(this.searchQuery, {
 
-      filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ')',
+      filters: '(unixStartDate:' + this.searchFrom + ' TO ' + this.searchTo + ') AND ( "Open Days" OR "Academic Conferences" )',
 
       // TO DO:
       // Add in additional filters for categories https://www.algolia.com/doc/guides/searching/filtering/#filtering
@@ -168,7 +168,7 @@ export default {
       // OR FOR FACET FILTERS SEE https://www.algolia.com/doc/guides/searching/filtering/#facet-filters
       // Try faceting using an aray that's created with vue bound check boxes
 
-      attributesToRetrieve: ['eventTitle', 'abstract', 'urlPath'],
+      attributesToRetrieve: ['eventTitle', 'abstract', 'urlPath', '_tags'],
       hitsPerPage: 50,
       page: page // pass in from var above which references data 'page'. Use this to work on creating pagination buttons
       }, function searchDone(err, content) {
