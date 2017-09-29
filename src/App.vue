@@ -234,7 +234,7 @@ export default {
 
       // first cater for nothing being ticked. Set the filter string to something that returns all results such as have a start data that isn't 0
       if(  localcheckedCategories.length <= 0 ) {
-        console.log("LESS THAN OR EQUAL TO ZERO: " + localcheckedCategories.length );
+        // console.log("LESS THAN OR EQUAL TO ZERO: " + localcheckedCategories.length );
         this.checkedCategoriesString = "unixStartDate != 0";
       } else {
       // first wrap array in quotes (required for filter syntax)
@@ -244,7 +244,7 @@ export default {
       // now join the categories using OR
       let filterBuilt = quoteCategories.join(" OR ");
       this.checkedCategoriesString = filterBuilt;
-      console.log("MORE THAN ZERO: " + localcheckedCategories.length );
+      // console.log("MORE THAN ZERO: " + localcheckedCategories.length );
       return filterBuilt;
       }
     }
