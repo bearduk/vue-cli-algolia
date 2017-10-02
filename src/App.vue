@@ -121,7 +121,7 @@ export default {
         this.client = algoliasearch("HT7VYJG3KU", "d37bbf3291b226676c9f3f1937e865d3");
         // -> test alg
         // this.client = algoliasearch("QW5WOXYL7O", "0f825e2369bc691ec1bb85815e452ff5");
-        this.index = this.client.initIndex('dev_EVENTS');
+        this.index = this.client.initIndex('keele_main_EVENTS');
 
 
         var moment = require('moment');
